@@ -35,8 +35,8 @@ unique_counts_summary <- counts %>%
 
 ## Save gene count tables ------------------------------------------------------
 ### Save combined raw counts data
-write_tsv(counts, paste(output_dir, "counts_raw.tsv", sep = "/"))
+write_tsv(counts, file.path(output_dir, "counts_raw.tsv"))
 
 ### Save total counts summary
-write_tsv(unique_counts_summary, paste(output_dir, "unique_counts_summary.tsv", sep = "/"))
+write_tsv(unique_counts_summary, file.path(output_dir, "unique_counts_summary.tsv"))
 

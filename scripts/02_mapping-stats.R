@@ -8,7 +8,7 @@ fig_dir <- "results/figures"
 
 
 ## Load data -------------------------------------------------------------------
-summary_df <- read_tsv(paste(input_dir, "mapping_stats.txt", sep = "/"))
+summary_df <- read_tsv(file.path(input_dir, "mapping_stats.txt"))
 
 ### Transform dataframe to long format for plotting
 summary_lng <- summary_df %>% 
@@ -48,7 +48,7 @@ summary_pl <- ggplot(summary_lng, aes(x = value, y = fct_rev(sample), fill = fct
         aspect.ratio = 2/3)
 
 
-ggsave(paste(fig_dir, "mapping_stats.png", sep = "/"), summary_pl, units = "cm", width = 15)
-ggsave(paste(fig_dir, "mapping_stats.pdf", sep = "/"), summary_pl, units = "cm", width = 15)
+ggsave(file.path(fig_dir, "mapping_stats.png"), summary_pl, units = "cm", width = 15)
+ggsave(file.path(fig_dir, "mapping_stats.pdf"), summary_pl, units = "cm", width = 15)
 
 

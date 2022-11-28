@@ -8,7 +8,7 @@ fig_dir <- "results/figures/01_DGEA"
 
 
 ## Load DESeq object -----------------------------------------------------------
-dds <- readRDS(paste(input_dir, "dds.rds", sep = "/"))
+dds <- readRDS(file.path(input_dir, "dds.rds"))
 
 
 ## Visualization of normalization effect on count distribution -----------------
@@ -50,6 +50,6 @@ norm_pl <- ggplot(counts_long, aes(x = count, y = fct_rev(sample))) +
         legend.position = "top",
         aspect.ratio = 1)
 
-ggsave(paste(fig_dir, "DESeq_normalization.png", sep = "/"), norm_pl, units = "cm", width = 10, scale = 3/2)
-ggsave(paste(fig_dir, "DESeq_normalization.pdf", sep = "/"), norm_pl, units = "cm", width = 10, scale = 3/2)
+ggsave(file.path(fig_dir, "DESeq_normalization.png"), norm_pl, units = "cm", width = 10, scale = 3/2)
+ggsave(file.path(fig_dir, "DESeq_normalization.pdf"), norm_pl, units = "cm", width = 10, scale = 3/2)
 

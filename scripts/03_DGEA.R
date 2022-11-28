@@ -16,7 +16,7 @@ gene_annotation <- read_tsv(gene_annotation_file,
 
 ## Prepare data for DGEA -------------------------------------------------------
 ### Load counts data 
-counts <- read_tsv(paste(input_dir, "counts_raw.tsv", sep = "/"))
+counts <- read_tsv(file.path(input_dir, "counts_raw.tsv"))
 
 ### Prepare matrix of counts
 counts_mtx <- counts %>% 
@@ -43,20 +43,20 @@ dds <- dds[keep,]
 ### Calculate size factors and save normalized counts
 dds <- estimateSizeFactors(dds)
 sizeFactors(dds)
-dput(sizeFactors(dds), paste(input_dir, "size_factors.tsv", sep = "/"))
+dput(sizeFactors(dds), file.path(input_dir, "size_factors.txt"))
 
 counts_norm <- counts(dds, normalized=TRUE) %>% 
   as.data.frame() %>% 
   mutate(geneID = row.names(.)) %>% 
   select(geneID, everything())
 
-write_tsv(counts_norm, paste(input_dir, "counts_norm.tsv", sep = "/"))
+write_tsv(counts_norm, file.path(input_dir, "counts_norm.tsv"))
 
 
 ## Run DGEA --------------------------------------------------------------------
 dds <- DESeq(dds)
 
-saveRDS(dds, paste(output_dir, "dds.rds", sep = "/"))
+saveRDS(dds, file.path(output_dir, "dds.rds"))
 
 
 ## Extract DGEA results --------------------------------------------------------
@@ -74,7 +74,7 @@ log2FC_threshold = log2(1.5)
 
 #### Tat.stable/Tat.0h vs control
 walk2(contrasts_list$numerator, contrasts_list$denominator, 
-      safely(extract_results), dds = dds, gene_annotation = gene_annotation, log2FC_threshold)
+      safely(extract_results), dds = dds, gene_annotation = gene_annotation, log2FC_threshold, output_dir)
 
 
 #### Tat.16h vs Tat.0h
@@ -82,7 +82,7 @@ dds$sample <- relevel(dds$sample, ref = "Tat.0h")
 dds <- DESeq(dds)
 
 walk2(contrasts_list$numerator, contrasts_list$denominator, 
-      safely(extract_results), dds = dds, gene_annotation = gene_annotation, log2FC_threshold)
+      safely(extract_results), dds = dds, gene_annotation = gene_annotation, log2FC_threshold, output_dir)
 
 
 #### Tat.stable vs Tat.16h
@@ -90,5 +90,5 @@ dds$sample <- relevel(dds$sample, ref = "Tat.16h")
 dds <- DESeq(dds)
 
 walk2(contrasts_list$numerator, contrasts_list$denominator, 
-      safely(extract_results), dds = dds, gene_annotation = gene_annotation, log2FC_threshold)
+      safely(extract_results), dds = dds, gene_annotation = gene_annotation, log2FC_threshold, output_dir)
 

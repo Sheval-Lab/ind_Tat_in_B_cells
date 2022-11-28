@@ -9,7 +9,7 @@ fig_dir <- "results/figures/01_DGEA"
 
 
 ## Load DGEA results -----------------------------------------------------------
-degs_table <- read_tsv(paste(input_dir, "LFC_DE_table.tsv", sep = "/"))
+degs_table <- read_tsv(file.path(input_dir, "LFC_DE_table.tsv"))
 
 
 ## Calculate DEGs numbers ------------------------------------------------------
@@ -69,5 +69,5 @@ ggplot(degs_number, aes(x = comparison, y = n)) +
         aspect.ratio = 1)
 
 
-ggsave(paste(fig_dir, "DEGs_number_barplot.png", sep = "/"), units = "cm", width = 8, height = 5, scale = 2)
-ggsave(paste(fig_dir, "DEGs_number_barplot.pdf", sep = "/"), units = "cm", width = 8, height = 5, scale = 2)
+ggsave(file.path(fig_dir, "DEGs_number_barplot.png"), units = "cm", width = 8, height = 5, scale = 2)
+ggsave(file.path(fig_dir, "DEGs_number_barplot.pdf"), units = "cm", width = 8, height = 5, scale = 2)

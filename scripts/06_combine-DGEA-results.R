@@ -19,7 +19,7 @@ degs_table <- degs_table %>%
   select(-file)
 
 ### Save combines DEGs table
-write_tsv(degs_table, paste(output_dir, "LFC_DE_table.tsv", sep = "/"))
+write_tsv(degs_table, file.path(output_dir, "LFC_DE_table.tsv"))
 
 
 ## Load DGEA results - all genes -----------------------------------------------
@@ -41,5 +41,5 @@ dgea_table_read <- function(file){
 dgea_table <- map(dgea_table_files, dgea_table_read) %>% purrr::reduce(full_join)
 
 ### Save combines DGEA results table
-write_tsv(dgea_table, paste(output_dir, "LFC_DGEA_table.tsv", sep = "/"))
+write_tsv(dgea_table, file.path(output_dir, "LFC_DGEA_table.tsv"))
 

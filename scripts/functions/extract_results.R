@@ -5,12 +5,16 @@
 #' It saves extracted results (with and without LFC shrinkage)
 #' into 'deseq' subdirectory of the provided output directory 
 
-extract_results <- function(dds, numerator, denominator, gene_annotation, log2FC_threshold){
+library(tidyverse)
+library(DESeq2)
+library(apeglm) # necessary for lfcShrink procedure
+
+extract_results <- function(dds, numerator, denominator, gene_annotation, log2FC_threshold, outdir){
   ### Extract normalized counts
   counts_norm <- counts(dds, normalized=TRUE) %>% 
     as.data.frame() %>% 
-    mutate(geneID = rownames(.)) %>% 
-    select(geneID, everything())
+    dplyr::mutate(geneID = rownames(.)) %>% 
+    dplyr::select(geneID, everything())
   
   samples2extract <- 
     c(TRUE,
@@ -22,15 +26,15 @@ extract_results <- function(dds, numerator, denominator, gene_annotation, log2FC
   ### Extract results (without LFC shrinkage)
   res <- results(dds, contrast = c("sample", as.character(numerator), as.character(denominator)), alpha = 0.05)
   res_df <- res %>% as.data.frame() %>% 
-    mutate(
+    dplyr::mutate(
       geneID = rownames(.), 
       ensID = str_remove(geneID, ".\\d+$"),
       FC = 2^log2FoldChange) %>% 
-    filter(!is.na(padj)) %>%
-    arrange(padj) %>%
+    dplyr::filter(!is.na(padj)) %>%
+    dplyr::arrange(padj) %>%
     left_join(., gene_annotation, by = "geneID") %>% 
     left_join(., counts_norm, by = "geneID") %>% 
-    select(geneID, ensID, gene_name, gene_type,
+    dplyr::select(geneID, ensID, gene_name, gene_type,
            padj, log2FC = log2FoldChange, FC, 
            everything())
   
@@ -38,34 +42,37 @@ extract_results <- function(dds, numerator, denominator, gene_annotation, log2FC
   res_LFC <- lfcShrink(dds, coef = str_c("sample", as.character(numerator), "vs", as.character(denominator), sep = "_"), 
                        res = res, type="apeglm")
   res_LFC_df <- res_LFC %>% as.data.frame() %>% 
-    mutate(
+    dplyr::mutate(
       geneID = rownames(.), 
       ensID = str_remove(geneID, ".\\d+$"),
       FC = 2^log2FoldChange) %>% 
-    filter(!is.na(padj)) %>%
-    arrange(padj) %>%
+    dplyr::filter(!is.na(padj)) %>%
+    dplyr::arrange(padj) %>%
     left_join(., gene_annotation, by = "geneID") %>% 
     left_join(., counts_norm, by = "geneID") %>% 
-    select(geneID, ensID, gene_name, gene_type,
+    dplyr::select(geneID, ensID, gene_name, gene_type,
            padj, log2FC = log2FoldChange, FC, 
            everything())
+  
+  ### Create 'deseq' subdirectory if it not exists
+  dir.create(file.path(outdir, "deseq"), showWarnings = FALSE)
   
   ### Save tables
   res_file <- str_c(as.character(numerator), "vs", as.character(denominator), sep = "_") %>% 
     str_c(., ".tsv") %>% 
-    str_c(output_dir, "deseq", ., sep = "/")
+    file.path(outdir, "deseq", .)
   
   res_DE_file <- str_c(as.character(numerator), "vs", as.character(denominator), sep = "_") %>% 
     str_c(., ".DE.tsv") %>% 
-    str_c(output_dir, "deseq", ., sep = "/")
+    file.path(outdir, "deseq", .)
   
   res_LFC_file <- str_c(as.character(numerator), "vs", as.character(denominator), sep = "_") %>% 
     str_c(., ".LFC.tsv") %>% 
-    str_c(output_dir, "deseq", ., sep = "/")
+    file.path(outdir, "deseq", .)
   
   res_LFC_DE_file <- str_c(as.character(numerator), "vs", as.character(denominator), sep = "_") %>% 
     str_c(., ".LFC.DE.tsv") %>% 
-    str_c(output_dir, "deseq", ., sep = "/")
+    file.path(outdir, "deseq", .)
   
   write_tsv(res_df, res_file)
   write_tsv(res_LFC_df, res_LFC_file)

@@ -10,7 +10,7 @@ fig_dir <- "results/figures/01_DGEA"
 
 
 ## Load DESeq object -----------------------------------------------------------
-dds <- readRDS(paste(input_dir, "dds.rds", sep = "/"))
+dds <- readRDS(file.path(input_dir, "dds.rds"))
 
 
 ## Visualize expression data with PCA ------------------------------------------
@@ -34,8 +34,8 @@ pca_pl <- ggplot(pca, aes(PC1, PC2, color = factor(sample, levels = sample_order
         legend.text.align = 0,
         aspect.ratio = 1)
 
-ggsave(paste(fig_dir, "PCA.png", sep = "/"), pca_pl, units = "cm", width = 5, height = 5, scale = 2, dpi = 600)
-ggsave(paste(fig_dir, "PCA.pdf", sep = "/"), pca_pl, units = "cm", width = 5, height = 5, scale = 2)
+ggsave(file.path(fig_dir, "PCA.png"), pca_pl, units = "cm", width = 5, height = 5, scale = 2, dpi = 600)
+ggsave(file.path(fig_dir, "PCA.pdf"), pca_pl, units = "cm", width = 5, height = 5, scale = 2)
 
 
 ## Visualize cross-sample correlation with heatmap -----------------------------
@@ -92,8 +92,8 @@ hm <- Heatmap(
   left_annotation = ra)
 
 ### Save heatmap
-ragg::agg_png(paste(fig_dir, "sample_cor_hm.png", sep = "/"), units = "cm", width = 15, height = 10, res = 300, scaling = 3/4)
-# pdf(paste(fig_dir, "sample_cor_hm.pdf", sep = "/"), height = 5)
+ragg::agg_png(file.path(fig_dir, "sample_cor_hm.png"), units = "cm", width = 15, height = 10, res = 300, scaling = 3/4)
+# pdf(file.path(fig_dir, "sample_cor_hm.pdf"), height = 5)
 draw(
   hm,
   heatmap_legend_side = "top",
