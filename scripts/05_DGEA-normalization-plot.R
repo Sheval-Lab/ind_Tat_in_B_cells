@@ -1,5 +1,6 @@
 ## Load libraries --------------------------------------------------------------
 library(tidyverse)
+library(DESeq2)
 ### Import sample names notations and color palette
 source("scripts/00_sample-names.R")
 
