@@ -51,6 +51,6 @@ norm_pl <- ggplot(counts_long, aes(x = count, y = fct_rev(sample))) +
         legend.position = "top",
         aspect.ratio = 1)
 
-ggsave(file.path(fig_dir, "DESeq_normalization.png"), norm_pl, units = "cm", width = 10, scale = 3/2)
-ggsave(file.path(fig_dir, "DESeq_normalization.pdf"), norm_pl, units = "cm", width = 10, scale = 3/2)
+ggsave(file.path(fig_dir, "DESeq_normalization.png"), norm_pl, units = "cm", width = 15, height = 10, dpi = 300)
+ggsave(file.path(fig_dir, "DESeq_normalization.pdf"), norm_pl, units = "cm", width = 15, height = 10)
 

@@ -1,41 +1,41 @@
 ## Sample names ----------------------------------------------------------------
-sample_order <- c("Tat.stable", "Tat.16h", "Tat.0h", "control")
+sample_order <- c("control", "Tat.stable", "Tat.0h", "Tat.16h")
 
 sample_names <- paste(rep(sample_order, each = 3), 1:3, sep = ".")
 
 sample_names_format <- c(
+  expression("RPMI 8866"),
   expression("RPMI"^{"Tat"}), 
-  expression("RPMI"^{"Tat-ind"}~"Doxy+"),  
-  expression("RPMI"^{"Tat-ind"}~"Doxy-"),
-  expression("RPMI"))
+  expression("RPMI"^{"iTat dox-"}),
+  expression("RPMI"^{"iTat dox+"}))
 
 sample_names_format_all <- c(
+  expression("RPMI 8866"~1), 
+  expression("RPMI 8866"~2), 
+  expression("RPMI 8866"~3),
   expression("RPMI"^{"Tat"}~1), 
   expression("RPMI"^{"Tat"}~2), 
   expression("RPMI"^{"Tat"}~3),  
-  expression("RPMI"^{"Tat-ind"}~"Doxy+"~1), 
-  expression("RPMI"^{"Tat-ind"}~"Doxy+"~2), 
-  expression("RPMI"^{"Tat-ind"}~"Doxy+"~3),
-  expression("RPMI"^{"Tat-ind"}~"Doxy-"~1), 
-  expression("RPMI"^{"Tat-ind"}~"Doxy-"~2), 
-  expression("RPMI"^{"Tat-ind"}~"Doxy-"~3),
-  expression("RPMI"~1), 
-  expression("RPMI"~2), 
-  expression("RPMI"~3))
+  expression("RPMI"^{"iTat dox-"}~1), 
+  expression("RPMI"^{"iTat dox-"}~2), 
+  expression("RPMI"^{"iTat dox-"}~3),
+  expression("RPMI"^{"iTat dox+"}~1), 
+  expression("RPMI"^{"iTat dox+"}~2), 
+  expression("RPMI"^{"iTat dox+"}~3))
 
 
 ## Comparison names ------------------------------------------------------------
 comparison_order <- c(
+  "Tat.0h_vs_control",
   "Tat.stable_vs_control",
   "Tat.16h_vs_Tat.0h",
-  "Tat.stable_vs_Tat.16h",
-  "Tat.0h_vs_control")
+  "Tat.stable_vs_Tat.16h")
 
 comparison_names_format <- c(
-  expression("RPMI"^{"Tat"}~"vs"~"RPMI"), 
-  expression("RPMI"^{"Tat-ind"}~"Doxy+"~"vs"~"RPMI"^{"Tat-ind"}~"Doxy-"),  
-  expression("RPMI"^{"Tat"}~"vs"~"RPMI"^{"Tat-ind"}~"Doxy+"),
-  expression("RPMI"^{"Tat-ind"}~"Doxy-"~"vs"~"RPMI"))
+  expression("RPMI"^{"iTat dox-"}~"vs"~"RPMI 8866"),
+  expression("RPMI"^{"Tat"}~"vs"~"RPMI 8866"), 
+  expression("RPMI"^{"iTat dox+"}~"vs"~"RPMI"^{"iTat dox-"}),  
+  expression("RPMI"^{"Tat"}~"vs"~"RPMI"^{"iTat dox+"}))
 
 
 ## Color palette ---------------------------------------------------------------

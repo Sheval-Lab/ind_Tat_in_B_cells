@@ -24,14 +24,15 @@ summary_pl <- ggplot(summary_lng, aes(x = value, y = fct_rev(sample), fill = fct
   scale_x_continuous(labels = scales::format_format(big.mark = " ", decimal.mark = ".", scientific = FALSE)) +
   scale_y_discrete(labels = rev(sample_names_format_all)) +
   scale_fill_manual(
+    breaks = c("raw", "trimmed", "unique_aligned", "mapped_gencode"),
     values = c(
-      "raw" = cols4[1], 
-      "trimmed" = cols4[2], 
-      "unique_aligned" = cols4[3], 
+      "raw" = cols4[1],
+      "trimmed" = cols4[2],
+      "unique_aligned" = cols4[3],
       "mapped_gencode" = cols4[4]),
     labels = c(
-      "Total reads", 
-      "After trimming", 
+      "Total reads",
+      "After trimming",
       "Uniquely aligned to genome",
       "Uniquely mapped to GENCODE annotation")) +
   guides(fill = guide_legend(nrow = 2)) +
@@ -48,7 +49,7 @@ summary_pl <- ggplot(summary_lng, aes(x = value, y = fct_rev(sample), fill = fct
         aspect.ratio = 2/3)
 
 
-ggsave(file.path(fig_dir, "mapping_stats.png"), summary_pl, units = "cm", width = 15)
-ggsave(file.path(fig_dir, "mapping_stats.pdf"), summary_pl, units = "cm", width = 15)
+ggsave(file.path(fig_dir, "mapping_stats.png"), summary_pl, units = "cm", width = 15, height = 10, dpi = 300)
+ggsave(file.path(fig_dir, "mapping_stats.pdf"), summary_pl, units = "cm", width = 15, height = 10)
 
 

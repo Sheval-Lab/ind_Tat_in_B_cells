@@ -20,10 +20,15 @@ plot_kegg_map <- function(hsa_id, fc_list, suffix){
     pathway.id = as.character(hsa_id),
     out.suffix = as.character(suffix),
     species = "hsa",
+    node.sum = "max",
     limit = list(gene = c(-1,1), cpd = 1),
     low = list(gene = "blue", cpd = "green"))
 }
 
+# hsa04120 - Ubiquitin mediated proteolysis
+# hsa04140 - Autophagy - animal
+
+hsa_degrad <- c("hsa04120", "hsa04140")
 
 ## Tat.stable vs control -------------------------------------------------------
 ### Prepare gene list of log2FC values Tat.stable vs control
@@ -38,6 +43,8 @@ hsa_tatstable_vs_control <- c(
   "hsa04261")
 
 walk(hsa_tatstable_vs_control, safely(plot_kegg_map), fc_list = fc_list, suffix = "Tatstable_vs_control")
+
+walk(hsa_degrad, safely(plot_kegg_map), fc_list = fc_list, suffix = "Tatstable_vs_control")
 
 
 ## Tat.16h vs Tat.0h -----------------------------------------------------------
@@ -59,6 +66,8 @@ hsa_tat16h_vs_tat0h <- c(
   "hsa05231", "hsa05414")
 
 walk(hsa_tat16h_vs_tat0h, safely(plot_kegg_map), fc_list = fc_list, suffix = "Tat16h")
+
+walk(hsa_degrad, safely(plot_kegg_map), fc_list = fc_list, suffix = "Tat16h")
 
 
 ## Tat.stable vs Tat.16h -------------------------------------------------------
@@ -84,3 +93,5 @@ hsa_tatstable_vs_tat16h <- c(
 
 
 walk(hsa_tatstable_vs_tat16h, safely(plot_kegg_map), fc_list = fc_list, suffix = "Tatstable_vs_Tat16h")
+
+walk(hsa_degrad, safely(plot_kegg_map), fc_list = fc_list, suffix = "Tatstable_vs_Tat16h")

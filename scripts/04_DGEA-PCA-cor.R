@@ -19,7 +19,7 @@ pca_percent_var <- round(100 * attr(pca, "percentVar"))
 
 
 pca_pl <- ggplot(pca, aes(PC1, PC2, color = factor(sample, levels = sample_order))) + 
-  geom_point(size = 4, alpha = 0.8) +
+  geom_point(size = 3, alpha = 0.8) +
   xlab(paste0("PC1: ", pca_percent_var[1], "% variance")) + 
   ylab(paste0("PC2: ", pca_percent_var[2], "% variance")) +
   scale_color_manual(
@@ -34,8 +34,8 @@ pca_pl <- ggplot(pca, aes(PC1, PC2, color = factor(sample, levels = sample_order
         legend.text.align = 0,
         aspect.ratio = 1)
 
-ggsave(file.path(fig_dir, "PCA.png"), pca_pl, units = "cm", width = 5, height = 5, scale = 2, dpi = 600)
-ggsave(file.path(fig_dir, "PCA.pdf"), pca_pl, units = "cm", width = 5, height = 5, scale = 2)
+ggsave(file.path(fig_dir, "PCA.png"), pca_pl, units = "cm", width = 10, height = 6, dpi = 300)
+ggsave(file.path(fig_dir, "PCA.pdf"), pca_pl, units = "cm", width = 10, height = 6)
 
 
 ## Visualize cross-sample correlation with heatmap -----------------------------
@@ -52,10 +52,10 @@ ha <- HeatmapAnnotation(
       title = "Sample", 
       at = sample_order,
       labels = gt_render(c(
-        "RPMI^Tat",
-        "RPMI^Tat-ind Doxy+", 
-        "RPMI^Tat-ind Doxy-",
-        "RPMI")))),
+        "RPMI 8866",
+        "RPMI^Tat", 
+        "RPMI<sup>iTat dox-</sup>",
+        "RPMI<sup>iTat dox+</sup>")))),
   gp = gpar(col = "white"))
 
 ### Row annotation - same as column annotation
@@ -69,10 +69,10 @@ ra <- rowAnnotation(
       title = "", 
       at = sample_order,
       labels = gt_render(c(
-        "RPMI^Tat",
-        "RPMI^Tat-ind Doxy+", 
-        "RPMI^Tat-ind Doxy-",
-        "RPMI")))),
+        "RPMI 8866",
+        "RPMI^Tat", 
+        "RPMI<sup>iTat dox-</sup>",
+        "RPMI<sup>iTat dox+</sup>")))),
   gp = gpar(col = "white"))
 
 ### Heatmap body
@@ -93,7 +93,7 @@ hm <- Heatmap(
 
 ### Save heatmap
 ragg::agg_png(file.path(fig_dir, "sample_cor_hm.png"), units = "cm", width = 15, height = 10, res = 300, scaling = 3/4)
-# pdf(file.path(fig_dir, "sample_cor_hm.pdf"), height = 5)
+# pdf(file.path(fig_dir, "sample_cor_hm.pdf"), width = 8, height = 5)
 draw(
   hm,
   heatmap_legend_side = "top",

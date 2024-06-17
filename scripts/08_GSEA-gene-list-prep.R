@@ -15,9 +15,11 @@ dgea_table <- read_tsv(file.path(input_dir, "LFC_DGEA_table.tsv"))
 
 ## Prepare input data for GSEA -------------------------------------------------
 ### Gene IDs conversion
-geneIDs_table <- bitr(dgea_table$ensID, fromType="ENSEMBL", toType="ENTREZID", OrgDb="org.Hs.eg.db") %>% 
+geneIDs_table <- bitr(dgea_table$ensID, 
+                      fromType = "ENSEMBL", toType = c("ENTREZID", "SYMBOL"), 
+                      OrgDb="org.Hs.eg.db") %>% 
   filter(!duplicated(ENTREZID), !duplicated(ENSEMBL)) %>% 
-  dplyr::rename(ensID = ENSEMBL, entrezID = ENTREZID)
+  dplyr::rename(ensID = ENSEMBL, entrezID = ENTREZID, gene_symbol = SYMBOL)
 
 dgea_table_entrez <- left_join(geneIDs_table, dgea_table, by = "ensID")
 

@@ -70,8 +70,11 @@ dpl_gsea_kegg_tatstable_up <- gsea_kegg_tatstable %>%
     color = guide_colorbar(reverse = TRUE, order = 2)) +
   theme_dpl
   
-ggsave(file.path(fig_dir, "UP_Tat.stable_vs_control.png"), dpl_gsea_kegg_tatstable_up, units = "cm", width = 7, height = 5, scale = 2)
-ggsave(file.path(fig_dir, "UP_Tat.stable_vs_control.pdf"), dpl_gsea_kegg_tatstable_up, units = "cm", width = 7, height = 5, scale = 2)
+ragg::agg_png(file.path(fig_dir, "UP_Tat.stable_vs_control.png"), units = "cm", width = 7, height = 4, res = 600, scaling = 0.5)
+dpl_gsea_kegg_tatstable_up
+dev.off()
+
+ggsave(file.path(fig_dir, "UP_Tat.stable_vs_control.pdf"), dpl_gsea_kegg_tatstable_up, units = "cm", width = 7, height = 4, scale = 2)
 
 ### DOWN
 dpl_gsea_kegg_tatstable_dn <- gsea_kegg_tatstable %>% 
@@ -90,8 +93,11 @@ dpl_gsea_kegg_tatstable_dn <- gsea_kegg_tatstable %>%
     color = guide_colorbar(reverse = TRUE, order = 2)) +
   theme_dpl
 
-ggsave(file.path(fig_dir, "DOWN_Tat.stable_vs_control.png"), dpl_gsea_kegg_tatstable_dn, units = "cm", width = 7, height = 5, scale = 2)
-ggsave(file.path(fig_dir, "DOWN_Tat.stable_vs_control.pdf"), dpl_gsea_kegg_tatstable_dn, units = "cm", width = 7, height = 5, scale = 2)
+ragg::agg_png(file.path(fig_dir, "DOWN_Tat.stable_vs_control.png"), units = "cm", width = 7.5, height = 4, res = 600, scaling = 0.5)
+dpl_gsea_kegg_tatstable_dn
+dev.off()
+
+ggsave(file.path(fig_dir, "DOWN_Tat.stable_vs_control.pdf"), dpl_gsea_kegg_tatstable_dn, units = "cm", width = 7.5, height = 4, scale = 2)
 
 
 ### Tat.16h vs Tat.0h ----------------------------------------------------------
@@ -132,7 +138,7 @@ ggsave(file.path(fig_dir, "UP_Tat.16h_vs_Tat.0h.pdf"), dpl_gsea_kegg_tat16h_up, 
 ### UP - top20
 dpl_gsea_kegg_tat16h_up_top20 <- gsea_kegg_tat16h %>% 
   filter(direction == "UP") %>% 
-  slice_min(order_by = p.adjust, n = 20) %>% 
+  slice_max(order_by = Count, n = 20) %>% 
   ggplot(aes(x = GeneRatio, y = fct_reorder(Description, GeneRatio))) +
   geom_point(aes(color = p.adjust, size = Count)) +
   facet_wrap(~ direction, labeller = as_labeller(c("UP" = "Activated\nKEGG pathways"))) +
@@ -147,8 +153,11 @@ dpl_gsea_kegg_tat16h_up_top20 <- gsea_kegg_tat16h %>%
     color = guide_colorbar(reverse = TRUE, order = 2)) +
   theme_dpl
 
-ggsave(file.path(fig_dir, "top20_UP_Tat.16h_vs_Tat.0h.png"), dpl_gsea_kegg_tat16h_up_top20, units = "cm", width = 7, height = 5, scale = 2.5)
-ggsave(file.path(fig_dir, "top20_UP_Tat.16h_vs_Tat.0h.pdf"), dpl_gsea_kegg_tat16h_up_top20, units = "cm", width = 7, height = 5, scale = 2.5)
+ragg::agg_png(file.path(fig_dir, "top20count_UP_Tat.16h_vs_Tat.0h.png"), units = "cm", width = 9, height = 6, res = 600, scaling = 0.5)
+dpl_gsea_kegg_tat16h_up_top20
+dev.off()
+
+ggsave(file.path(fig_dir, "top20count_UP_Tat.16h_vs_Tat.0h.pdf"), dpl_gsea_kegg_tat16h_up_top20, units = "cm", width = 9, height = 6, scale = 2)
 
 ### DOWN
 dpl_gsea_kegg_tat16h_dn <- gsea_kegg_tat16h %>% 
@@ -167,8 +176,12 @@ dpl_gsea_kegg_tat16h_dn <- gsea_kegg_tat16h %>%
     color = guide_colorbar(reverse = TRUE, order = 2)) +
   theme_dpl
 
-ggsave(file.path(fig_dir, "DOWN_Tat.16h_vs_Tat.0h.png"), dpl_gsea_kegg_tat16h_dn, units = "cm", width = 6.5, height = 5, scale = 2.5)
-ggsave(file.path(fig_dir, "DOWN_Tat.16h_vs_Tat.0h.pdf"), dpl_gsea_kegg_tat16h_dn, units = "cm", width = 6.5, height = 5, scale = 2.5)
+
+ragg::agg_png(file.path(fig_dir, "DOWN_Tat.16h_vs_Tat.0h.png"), units = "cm", width = 8, height = 6, res = 600, scaling = 0.5)
+dpl_gsea_kegg_tat16h_dn
+dev.off()
+
+ggsave(file.path(fig_dir, "DOWN_Tat.16h_vs_Tat.0h.pdf"), dpl_gsea_kegg_tat16h_dn, units = "cm", width = 8, height = 6, scale = 2)
 
 
 

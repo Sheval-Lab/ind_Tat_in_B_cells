@@ -70,7 +70,7 @@ contrasts_list <- contrasts_list[c(13, 10, 15, 5),]
 
 
 ### Extract results
-log2FC_threshold = log2(1.5)
+log2FC_threshold <- log2(1.5)
 
 #### Tat.stable/Tat.0h vs control
 walk2(contrasts_list$numerator, contrasts_list$denominator, 
